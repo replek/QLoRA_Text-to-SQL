@@ -3,42 +3,42 @@
 ════════════════════════════════════════════════════════════════════════
 
   Total examples  : 1,034
-  Exact matches   : 597  (57.7%)
-  Wrong           : 437  (42.3%)
+  Exact matches   : 607  (58.7%)
+  Wrong           : 427  (41.3%)
 
 ────────────────────────────────────────────────────────────────────────
   ERROR TYPE BREAKDOWN
 ────────────────────────────────────────────────────────────────────────
 Error Type                 Category       Count    % of Wrong    % of Total
 -------------------------  -----------  -------  ------------  ------------
-hallucinated_column        Columns          187         42.8%         18.1%
-hallucinated_table         Tables           148         33.9%         14.3%
-missing_column             Columns          139         31.8%         13.4%
-missing_table              Tables           121         27.7%         11.7%
-missing_select_column      Columns           97         22.2%          9.4%
-extra_join                 Structure         95         21.7%          9.2%
-wrong_select_column        Columns           95         21.7%          9.2%
-wrong_set_op_branch        Other             70         16.0%          6.8%
-wrong_group_by_column      Conditions        56         12.8%          5.4%
-missing_join               Structure         52         11.9%          5.0%
-wrong_join_count           Structure         52         11.9%          5.0%
-wrong_aggregation          Aggregation       36          8.2%          3.5%
-missing_subquery           Structure         34          7.8%          3.3%
-extra_distinct             Clauses           32          7.3%          3.1%
-missing_where              Clauses           28          6.4%          2.7%
-wrong_where_operator       Conditions        28          6.4%          2.7%
-missing_set_operation      Structure         28          6.4%          2.7%
-extra_subquery             Structure         25          5.7%          2.4%
-missing_distinct           Clauses           24          5.5%          2.3%
-extra_where                Clauses           23          5.3%          2.2%
-extra_set_operation        Structure         22          5.0%          2.1%
-wrong_order_by_column      Conditions        22          5.0%          2.1%
-extra_aggregation          Aggregation       21          4.8%          2.0%
-missing_order_by           Clauses           18          4.1%          1.7%
-missing_limit              Clauses           18          4.1%          1.7%
-extra_group_by             Clauses           14          3.2%          1.4%
+hallucinated_column        Columns          185         43.3%         17.9%
+hallucinated_table         Tables           143         33.5%         13.8%
+missing_column             Columns          137         32.1%         13.2%
+missing_table              Tables           118         27.6%         11.4%
+missing_select_column      Columns           96         22.5%          9.3%
+wrong_select_column        Columns           94         22.0%          9.1%
+extra_join                 Structure         89         20.8%          8.6%
+wrong_set_op_branch        Other             70         16.4%          6.8%
+wrong_group_by_column      Conditions        57         13.3%          5.5%
+wrong_join_count           Structure         52         12.2%          5.0%
+missing_join               Structure         48         11.2%          4.6%
+wrong_aggregation          Aggregation       36          8.4%          3.5%
+missing_subquery           Structure         36          8.4%          3.5%
+extra_distinct             Clauses           32          7.5%          3.1%
+missing_set_operation      Structure         28          6.6%          2.7%
+wrong_where_operator       Conditions        25          5.9%          2.4%
+missing_distinct           Clauses           24          5.6%          2.3%
+extra_where                Clauses           22          5.2%          2.1%
+extra_subquery             Structure         22          5.2%          2.1%
+wrong_order_by_column      Conditions        22          5.2%          2.1%
+missing_where              Clauses           22          5.2%          2.1%
+extra_aggregation          Aggregation       21          4.9%          2.0%
+missing_order_by           Clauses           18          4.2%          1.7%
+missing_limit              Clauses           18          4.2%          1.7%
+extra_group_by             Clauses           14          3.3%          1.4%
+extra_set_operation        Structure         14          3.3%          1.4%
 missing_aggregation        Aggregation       13          3.0%          1.3%
-missing_group_by           Clauses           12          2.7%          1.2%
+missing_group_by           Clauses           12          2.8%          1.2%
 extra_having               Clauses            7          1.6%          0.7%
 extra_order_by             Clauses            6          1.4%          0.6%
 extra_limit                Clauses            6          1.4%          0.6%
@@ -53,29 +53,29 @@ wrong_set_op_type          Other              1          0.2%          0.1%
 ────────────────────────────────────────────────────────────────────────
 Category       Count    % of Wrong
 -----------  -------  ------------
-Columns          518        118.5%
-Structure        308         70.5%
-Tables           269         61.6%
-Clauses          194         44.4%
-Conditions       109         24.9%
-Other             76         17.4%
-Aggregation       70         16.0%
+Columns          512        119.9%
+Structure        289         67.7%
+Tables           261         61.1%
+Clauses          187         43.8%
+Conditions       107         25.1%
+Other             76         17.8%
+Aggregation       70         16.4%
 
 ────────────────────────────────────────────────────────────────────────
   ERRORS PER INCORRECT EXAMPLE
 ────────────────────────────────────────────────────────────────────────
   # Errors    Examples    % of Wrong
 ----------  ----------  ------------
-         1          77         17.6%
-         2          53         12.1%
-         3         119         27.2%
-         4          61         14.0%
-         5          63         14.4%
-         6          35          8.0%
-         7          10          2.3%
+         1          75         17.6%
+         2          52         12.2%
+         3         119         27.9%
+         4          63         14.8%
+         5          55         12.9%
+         6          35          8.2%
+         7           9          2.1%
          8          10          2.3%
-         9           6          1.4%
-        10           2          0.5%
+         9           5          1.2%
+        10           3          0.7%
         11           1          0.2%
 
 ────────────────────────────────────────────────────────────────────────
@@ -83,16 +83,16 @@ Aggregation       70         16.0%
 ────────────────────────────────────────────────────────────────────────
 Error Pair                                     Count
 -------------------------------------------  -------
-hallucinated_column + hallucinated_table         127
-extra_join + hallucinated_column                  95
-extra_join + hallucinated_table                   90
-missing_column + missing_table                    89
-missing_select_column + wrong_select_column       88
-missing_column + missing_join                     52
-hallucinated_column + wrong_select_column         48
-hallucinated_table + missing_table                47
-missing_join + missing_table                      46
-hallucinated_column + missing_select_column       46
+hallucinated_column + hallucinated_table         122
+extra_join + hallucinated_column                  89
+missing_select_column + wrong_select_column       87
+missing_column + missing_table                    86
+extra_join + hallucinated_table                   84
+hallucinated_column + wrong_select_column         50
+hallucinated_column + missing_select_column       49
+missing_column + missing_join                     48
+hallucinated_table + missing_table                48
+hallucinated_column + missing_column              45
 
 ────────────────────────────────────────────────────────────────────────
   SAMPLE ERRORS — TOP 8 ERROR TYPES
@@ -107,23 +107,20 @@ hallucinated_column + missing_select_column       46
       pred_joins            : ['join']
       gold_joins            : []
     Example 2:
-      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id
-      GOLD : SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
-      hallucinated_tables   : ['concert']
-      hallucinated_columns  : ['name', 'stadium_id']
-      pred_joins            : ['join']
+      PRED : SELECT T1.Name , T1.Country FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID JOIN song AS T3 ON T2.Song_ID = T3.Song_ID WHERE T3.song_name LIKE '%Hey%'
+      GOLD : SELECT name , country FROM singer WHERE song_name LIKE '%Hey%'
+      hallucinated_tables   : ['singer_in_concert', 'song']
+      hallucinated_columns  : ['country', 'name', 'singer_id', 'song_id', 'song_name']
+      pred_joins            : ['join', 'join']
       gold_joins            : []
-      pred_set_ops          : ['except']
-      gold_set_ops          : []
     Example 3:
-      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id
-      GOLD : SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
-      hallucinated_tables   : ['concert']
-      hallucinated_columns  : ['name', 'stadium_id']
-      pred_joins            : ['join']
-      gold_joins            : []
-      pred_set_ops          : ['except']
-      gold_set_ops          : []
+      PRED : SELECT StuID FROM Student EXCEPT SELECT T1.StuID FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.pet_type = 'cat'
+      GOLD : SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat'
+      hallucinated_columns  : ['pet_type']
+      missing_columns       : ['pettype']
+      gold_branch_count     : 2
+      pred_branch_count     : 2
+      matching_branches     : 1
 
   [HALLUCINATED_TABLE]
     Example 1:
@@ -134,23 +131,20 @@ hallucinated_column + missing_select_column       46
       pred_joins            : ['join']
       gold_joins            : []
     Example 2:
-      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id
-      GOLD : SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id WHERE YEAR != "2014"
+      GOLD : SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014
       hallucinated_tables   : ['concert']
-      hallucinated_columns  : ['name', 'stadium_id']
-      pred_joins            : ['join']
-      gold_joins            : []
-      pred_set_ops          : ['except']
-      gold_set_ops          : []
+      missing_columns       : ['year']
+      gold_branch_count     : 2
+      pred_branch_count     : 2
+      matching_branches     : 1
     Example 3:
-      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id
-      GOLD : SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
-      hallucinated_tables   : ['concert']
-      hallucinated_columns  : ['name', 'stadium_id']
-      pred_joins            : ['join']
+      PRED : SELECT T1.Name , T1.Country FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID JOIN song AS T3 ON T2.Song_ID = T3.Song_ID WHERE T3.song_name LIKE '%Hey%'
+      GOLD : SELECT name , country FROM singer WHERE song_name LIKE '%Hey%'
+      hallucinated_tables   : ['singer_in_concert', 'song']
+      hallucinated_columns  : ['country', 'name', 'singer_id', 'song_id', 'song_name']
+      pred_joins            : ['join', 'join']
       gold_joins            : []
-      pred_set_ops          : ['except']
-      gold_set_ops          : []
 
   [MISSING_COLUMN]
     Example 1:
@@ -158,6 +152,14 @@ hallucinated_column + missing_select_column       46
       GOLD : SELECT T2.name , T2.capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year >= 2014 GROUP BY T2.stadium_id ORDER BY count(*) DESC LIMIT 1
       missing_columns       : ['year']
     Example 2:
+      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id WHERE YEAR != "2014"
+      GOLD : SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014
+      hallucinated_tables   : ['concert']
+      missing_columns       : ['year']
+      gold_branch_count     : 2
+      pred_branch_count     : 2
+      matching_branches     : 1
+    Example 3:
       PRED : SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert WHERE YEAR = "2014")
       GOLD : SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014
       missing_columns       : ['name', 'stadium_id', 'year']
@@ -168,10 +170,6 @@ hallucinated_column + missing_select_column       46
       gold_branch_count     : 2
       pred_branch_count     : 1
       matching_branches     : 0
-    Example 3:
-      PRED : SELECT T3.Name FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID JOIN concert AS T3 ON T2.concert_ID = T3.concert_ID WHERE YEAR = "2014"
-      GOLD : SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id = T2.singer_id JOIN concert AS T3 ON T1.concert_id = T3.concert_id WHERE T3.year = 2014
-      missing_columns       : ['year']
 
   [MISSING_TABLE]
     Example 1:
@@ -221,33 +219,6 @@ hallucinated_column + missing_select_column       46
       extra_select_cols     : ['pet_type']
       missing_select_cols   : ['pettype']
 
-  [EXTRA_JOIN]
-    Example 1:
-      PRED : SELECT T1.song_name , T1.song_release_year FROM singer AS T1 JOIN concert AS T2 ON T1.singer_id = T2.singer_id ORDER BY T1.age LIMIT 1
-      GOLD : SELECT song_name , song_release_year FROM singer ORDER BY age LIMIT 1
-      hallucinated_tables   : ['concert']
-      hallucinated_columns  : ['age', 'singer_id', 'song_name', 'song_release_year']
-      pred_joins            : ['join']
-      gold_joins            : []
-    Example 2:
-      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id
-      GOLD : SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
-      hallucinated_tables   : ['concert']
-      hallucinated_columns  : ['name', 'stadium_id']
-      pred_joins            : ['join']
-      gold_joins            : []
-      pred_set_ops          : ['except']
-      gold_set_ops          : []
-    Example 3:
-      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id
-      GOLD : SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
-      hallucinated_tables   : ['concert']
-      hallucinated_columns  : ['name', 'stadium_id']
-      pred_joins            : ['join']
-      gold_joins            : []
-      pred_set_ops          : ['except']
-      gold_set_ops          : []
-
   [WRONG_SELECT_COLUMN]
     Example 1:
       PRED : SELECT avg(pet_age) , max(pet_age) , pet_type FROM pets GROUP BY pet_type
@@ -275,11 +246,37 @@ hallucinated_column + missing_select_column       46
       pred_joins            : ['join']
       gold_joins            : ['join', 'join', 'join']
 
+  [EXTRA_JOIN]
+    Example 1:
+      PRED : SELECT T1.song_name , T1.song_release_year FROM singer AS T1 JOIN concert AS T2 ON T1.singer_id = T2.singer_id ORDER BY T1.age LIMIT 1
+      GOLD : SELECT song_name , song_release_year FROM singer ORDER BY age LIMIT 1
+      hallucinated_tables   : ['concert']
+      hallucinated_columns  : ['age', 'singer_id', 'song_name', 'song_release_year']
+      pred_joins            : ['join']
+      gold_joins            : []
+    Example 2:
+      PRED : SELECT T1.Name , T1.Country FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID JOIN song AS T3 ON T2.Song_ID = T3.Song_ID WHERE T3.song_name LIKE '%Hey%'
+      GOLD : SELECT name , country FROM singer WHERE song_name LIKE '%Hey%'
+      hallucinated_tables   : ['singer_in_concert', 'song']
+      hallucinated_columns  : ['country', 'name', 'singer_id', 'song_id', 'song_name']
+      pred_joins            : ['join', 'join']
+      gold_joins            : []
+    Example 3:
+      PRED : SELECT DISTINCT T1.FullName , T2.Model FROM car_makers AS T1 JOIN model_list AS T2 ON T1.id = T2.Maker
+      GOLD : SELECT Maker , Model FROM MODEL_LIST
+      hallucinated_tables   : ['car_makers']
+      hallucinated_columns  : ['fullname', 'id', 'maker', 'model']
+      extra_select_cols     : ['fullname']
+      missing_select_cols   : ['maker']
+      pred_joins            : ['join']
+      gold_joins            : []
+
   [WRONG_SET_OP_BRANCH]
     Example 1:
-      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id WHERE T2.year != 2014
+      PRED : SELECT name FROM stadium EXCEPT SELECT T1.name FROM stadium AS T1 JOIN concert AS T2 ON T1.stadium_id = T2.stadium_id WHERE YEAR != "2014"
       GOLD : SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014
       hallucinated_tables   : ['concert']
+      missing_columns       : ['year']
       gold_branch_count     : 2
       pred_branch_count     : 2
       matching_branches     : 1
