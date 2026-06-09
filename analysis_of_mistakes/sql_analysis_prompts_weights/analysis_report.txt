@@ -1,0 +1,323 @@
+════════════════════════════════════════════════════════════════════════
+  TEXT-TO-SQL PREDICTION ANALYSIS REPORT
+════════════════════════════════════════════════════════════════════════
+
+  Total examples  : 1,034
+  Exact matches   : 540  (52.2%)
+  Wrong           : 494  (47.8%)
+
+────────────────────────────────────────────────────────────────────────
+  ERROR TYPE BREAKDOWN
+────────────────────────────────────────────────────────────────────────
+Error Type                  Category       Count    % of Wrong    % of Total
+--------------------------  -----------  -------  ------------  ------------
+hallucinated_column         Columns          241         48.8%         23.3%
+hallucinated_table          Tables           190         38.5%         18.4%
+extra_join                  Structure        151         30.6%         14.6%
+missing_table               Tables           148         30.0%         14.3%
+missing_column              Columns          143         28.9%         13.8%
+missing_select_column       Columns           93         18.8%          9.0%
+wrong_select_column         Columns           90         18.2%          8.7%
+wrong_set_op_branch         Other             71         14.4%          6.9%
+missing_join                Structure         68         13.8%          6.6%
+wrong_group_by_column       Conditions        57         11.5%          5.5%
+wrong_join_count            Structure         47          9.5%          4.5%
+missing_subquery            Structure         36          7.3%          3.5%
+extra_where                 Clauses           34          6.9%          3.3%
+wrong_aggregation           Aggregation       30          6.1%          2.9%
+extra_subquery              Structure         30          6.1%          2.9%
+extra_distinct              Clauses           29          5.9%          2.8%
+missing_set_operation       Structure         28          5.7%          2.7%
+missing_distinct            Clauses           26          5.3%          2.5%
+wrong_where_operator        Conditions        25          5.1%          2.4%
+wrong_order_by_column       Conditions        24          4.9%          2.3%
+missing_group_by            Clauses           20          4.0%          1.9%
+missing_where               Clauses           16          3.2%          1.5%
+missing_limit               Clauses           15          3.0%          1.5%
+extra_aggregation           Aggregation       15          3.0%          1.5%
+missing_aggregation         Aggregation       15          3.0%          1.5%
+missing_order_by            Clauses           14          2.8%          1.4%
+extra_set_operation         Structure         12          2.4%          1.2%
+extra_order_by              Clauses            8          1.6%          0.8%
+missing_having              Clauses            8          1.6%          0.8%
+extra_group_by              Clauses            7          1.4%          0.7%
+extra_limit                 Clauses            6          1.2%          0.6%
+wrong_order_direction       Conditions         5          1.0%          0.5%
+wrong_set_op_count          Other              4          0.8%          0.4%
+wrong_set_op_type           Other              2          0.4%          0.2%
+extra_having                Clauses            2          0.4%          0.2%
+set_op_except_as_intersect  Other              1          0.2%          0.1%
+wrong_limit_value           Conditions         1          0.2%          0.1%
+set_op_union_as_intersect   Other              1          0.2%          0.1%
+
+────────────────────────────────────────────────────────────────────────
+  CATEGORY SUMMARY
+────────────────────────────────────────────────────────────────────────
+Category       Count    % of Wrong
+-----------  -------  ------------
+Columns          567        114.8%
+Structure        372         75.3%
+Tables           338         68.4%
+Clauses          185         37.4%
+Conditions       112         22.7%
+Other             79         16.0%
+Aggregation       60         12.1%
+
+────────────────────────────────────────────────────────────────────────
+  ERRORS PER INCORRECT EXAMPLE
+────────────────────────────────────────────────────────────────────────
+  # Errors    Examples    % of Wrong
+----------  ----------  ------------
+         1          77         15.6%
+         2          62         12.6%
+         3         164         33.2%
+         4          68         13.8%
+         5          50         10.1%
+         6          42          8.5%
+         7          14          2.8%
+         8           7          1.4%
+         9           9          1.8%
+        11           1          0.2%
+
+────────────────────────────────────────────────────────────────────────
+  TOP CO-OCCURRING ERROR PAIRS
+────────────────────────────────────────────────────────────────────────
+Error Pair                                     Count
+-------------------------------------------  -------
+extra_join + hallucinated_column                 151
+hallucinated_column + hallucinated_table         148
+extra_join + hallucinated_table                  129
+missing_column + missing_table                   104
+missing_select_column + wrong_select_column       87
+missing_column + missing_join                     68
+missing_join + missing_table                      61
+hallucinated_column + missing_select_column       58
+hallucinated_table + missing_table                57
+hallucinated_column + wrong_select_column         57
+
+────────────────────────────────────────────────────────────────────────
+  SAMPLE ERRORS — TOP 8 ERROR TYPES
+────────────────────────────────────────────────────────────────────────
+
+  [HALLUCINATED_COLUMN]
+    Example 1:
+      PRED : SELECT T1.song_name , T2.song_release_year FROM singer AS T1 JOIN singer AS T2 ON T1.Singer_id = T2.Singer_id ORDER BY T1.age LIMIT 1
+      GOLD : SELECT song_name , song_release_year FROM singer ORDER BY age LIMIT 1
+      hallucinated_columns  : ['age', 'singer_id', 'song_name', 'song_release_year']
+      pred_joins            : ['join']
+      gold_joins            : []
+    Example 2:
+      PRED : SELECT count(*) , T1.Country FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Country
+      GOLD : SELECT country , count(*) FROM singer GROUP BY country
+      hallucinated_tables   : ['singer_in_concert']
+      hallucinated_columns  : ['country', 'singer_id']
+      pred_joins            : ['join']
+      gold_joins            : []
+    Example 3:
+      PRED : SELECT T1.song_name FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.singer_id = T2.singer_id JOIN concert AS T3 ON T2.concert_id = T3.concert_id WHERE T1.age > (SELECT avg(age) FROM singer)
+      GOLD : SELECT song_name FROM singer WHERE age > (SELECT avg(age) FROM singer)
+      hallucinated_tables   : ['concert', 'singer_in_concert']
+      hallucinated_columns  : ['age', 'concert_id', 'singer_id', 'song_name']
+      pred_joins            : ['join', 'join']
+      gold_joins            : []
+
+  [HALLUCINATED_TABLE]
+    Example 1:
+      PRED : SELECT count(*) , T1.Country FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Country
+      GOLD : SELECT country , count(*) FROM singer GROUP BY country
+      hallucinated_tables   : ['singer_in_concert']
+      hallucinated_columns  : ['country', 'singer_id']
+      pred_joins            : ['join']
+      gold_joins            : []
+    Example 2:
+      PRED : SELECT T1.song_name FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.singer_id = T2.singer_id JOIN concert AS T3 ON T2.concert_id = T3.concert_id WHERE T1.age > (SELECT avg(age) FROM singer)
+      GOLD : SELECT song_name FROM singer WHERE age > (SELECT avg(age) FROM singer)
+      hallucinated_tables   : ['concert', 'singer_in_concert']
+      hallucinated_columns  : ['age', 'concert_id', 'singer_id', 'song_name']
+      pred_joins            : ['join', 'join']
+      gold_joins            : []
+    Example 3:
+      PRED : SELECT name FROM stadium EXCEPT SELECT T3.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id JOIN singer_in_concert AS T3 ON T1.concert_id = T3.concert_id WHERE T1.year != 2014
+      GOLD : SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014
+      hallucinated_tables   : ['singer_in_concert']
+      hallucinated_columns  : ['concert_id']
+      pred_joins            : ['join', 'join']
+      gold_joins            : ['join']
+      gold_branch_count     : 2
+      pred_branch_count     : 2
+      matching_branches     : 1
+
+  [EXTRA_JOIN]
+    Example 1:
+      PRED : SELECT T1.song_name , T2.song_release_year FROM singer AS T1 JOIN singer AS T2 ON T1.Singer_id = T2.Singer_id ORDER BY T1.age LIMIT 1
+      GOLD : SELECT song_name , song_release_year FROM singer ORDER BY age LIMIT 1
+      hallucinated_columns  : ['age', 'singer_id', 'song_name', 'song_release_year']
+      pred_joins            : ['join']
+      gold_joins            : []
+    Example 2:
+      PRED : SELECT count(*) , T1.Country FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Country
+      GOLD : SELECT country , count(*) FROM singer GROUP BY country
+      hallucinated_tables   : ['singer_in_concert']
+      hallucinated_columns  : ['country', 'singer_id']
+      pred_joins            : ['join']
+      gold_joins            : []
+    Example 3:
+      PRED : SELECT T1.song_name FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.singer_id = T2.singer_id JOIN concert AS T3 ON T2.concert_id = T3.concert_id WHERE T1.age > (SELECT avg(age) FROM singer)
+      GOLD : SELECT song_name FROM singer WHERE age > (SELECT avg(age) FROM singer)
+      hallucinated_tables   : ['concert', 'singer_in_concert']
+      hallucinated_columns  : ['age', 'concert_id', 'singer_id', 'song_name']
+      pred_joins            : ['join', 'join']
+      gold_joins            : []
+
+  [MISSING_TABLE]
+    Example 1:
+      PRED : SELECT count(*) FROM stadium WHERE capacity = ( SELECT max(capacity) FROM stadium )
+      GOLD : select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+      missing_tables        : ['concert']
+      hallucinated_tables   : ['stadium']
+      pred_aggs             : {'count': 1, 'max': 1}
+      gold_aggs             : {'count': 1}
+    Example 2:
+      PRED : SELECT count(*) FROM stadium WHERE capacity = ( SELECT max(capacity) FROM stadium )
+      GOLD : select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+      missing_tables        : ['concert']
+      hallucinated_tables   : ['stadium']
+      pred_aggs             : {'count': 1, 'max': 1}
+      gold_aggs             : {'count': 1}
+    Example 3:
+      PRED : SELECT count(*) FROM student WHERE age > 20
+      GOLD : SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid WHERE T1.age > 20
+      missing_tables        : ['has_pet']
+      missing_columns       : ['age', 'stuid']
+      pred_joins            : []
+      gold_joins            : ['join']
+
+  [MISSING_COLUMN]
+    Example 1:
+      PRED : SELECT name FROM stadium WHERE stadium_id NOT IN ( SELECT stadium_id FROM concert WHERE YEAR = 2014 )
+      GOLD : SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014
+      missing_columns       : ['name', 'stadium_id', 'year']
+      pred_joins            : []
+      gold_joins            : ['join']
+      pred_set_ops          : []
+      gold_set_ops          : ['except']
+      gold_branch_count     : 2
+      pred_branch_count     : 1
+      matching_branches     : 0
+    Example 2:
+      PRED : SELECT T1.Name , T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE YEAR = '2014' INTERSECT SELECT T1.Name , T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE YEAR = '2015'
+      GOLD : SELECT T2.name , T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.Year = 2014 INTERSECT SELECT T2.name , T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.Year = 2015
+      missing_columns       : ['year']
+      gold_branch_count     : 2
+      pred_branch_count     : 2
+      matching_branches     : 0
+    Example 3:
+      PRED : SELECT count(*) FROM student WHERE age > 20
+      GOLD : SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid WHERE T1.age > 20
+      missing_tables        : ['has_pet']
+      missing_columns       : ['age', 'stuid']
+      pred_joins            : []
+      gold_joins            : ['join']
+
+  [MISSING_SELECT_COLUMN]
+    Example 1:
+      PRED : SELECT max(capacity) , avg(capacity) FROM stadium
+      GOLD : select max(capacity), average from stadium
+      missing_select_cols   : ['average']
+      pred_aggs             : {'max': 1, 'avg': 1}
+      gold_aggs             : {'max': 1}
+    Example 2:
+      PRED : SELECT T1.fname FROM STUDENT AS T1 JOIN HAS_PET AS T2 ON T1.stuid = T2.stuid JOIN Pets AS T3 ON T2.petid = T3.petid WHERE T3.Pettype = 'Dog' EXCEPT SELECT T1.fname FROM STUDENT AS T1 JOIN HAS_PET AS T2 ON T1.stuid = T2.stuid JOIN Pets AS T3 ON T2.petid = T3.petid WHERE T3.Pettype = 'Cat'
+      GOLD : SELECT T1.fname , T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat')
+      missing_columns       : ['age']
+      missing_select_cols   : ['age']
+      pred_set_ops          : ['except']
+      gold_set_ops          : []
+    Example 3:
+      PRED : SELECT avg(pet_age) , max(pet_age) , pet_type FROM pets GROUP BY pet_type
+      GOLD : SELECT avg(pet_age) , max(pet_age) , pettype FROM pets GROUP BY pettype
+      extra_select_cols     : ['pet_type']
+      missing_select_cols   : ['pettype']
+
+  [WRONG_SELECT_COLUMN]
+    Example 1:
+      PRED : SELECT avg(pet_age) , max(pet_age) , pet_type FROM pets GROUP BY pet_type
+      GOLD : SELECT avg(pet_age) , max(pet_age) , pettype FROM pets GROUP BY pettype
+      extra_select_cols     : ['pet_type']
+      missing_select_cols   : ['pettype']
+    Example 2:
+      PRED : SELECT T1.FullName , T2.Maker , COUNT(*) FROM car_makers AS T1 JOIN model_list AS T2 ON T1.id = T2.Maker GROUP BY T2.Maker
+      GOLD : SELECT T1.FullName , T1.Id , count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id = T2.Maker GROUP BY T1.Id
+      extra_select_cols     : ['maker']
+      missing_select_cols   : ['id']
+    Example 3:
+      PRED : SELECT T2.FullName FROM car_names AS T1 JOIN car_makers AS T2 ON T1.Make = T2.id WHERE T1.Year = 1970
+      GOLD : SELECT DISTINCT T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id = T2.Maker JOIN CAR_NAMES AS T3 ON T2.model = T3.model JOIN CARS_DATA AS T4 ON T3.MakeId = T4.id WHERE T4.year = '1970'
+      missing_tables        : ['cars_data', 'model_list']
+      hallucinated_columns  : ['fullname', 'make']
+      missing_columns       : ['makeid', 'maker', 'model']
+      extra_select_cols     : ['fullname']
+      missing_select_cols   : ['maker']
+      pred_joins            : ['join']
+      gold_joins            : ['join', 'join', 'join']
+
+  [WRONG_SET_OP_BRANCH]
+    Example 1:
+      PRED : SELECT name FROM stadium EXCEPT SELECT T3.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id JOIN singer_in_concert AS T3 ON T1.concert_id = T3.concert_id WHERE T1.year != 2014
+      GOLD : SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014
+      hallucinated_tables   : ['singer_in_concert']
+      hallucinated_columns  : ['concert_id']
+      pred_joins            : ['join', 'join']
+      gold_joins            : ['join']
+      gold_branch_count     : 2
+      pred_branch_count     : 2
+      matching_branches     : 1
+    Example 2:
+      PRED : SELECT name FROM stadium WHERE stadium_id NOT IN ( SELECT stadium_id FROM concert WHERE YEAR = 2014 )
+      GOLD : SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.year = 2014
+      missing_columns       : ['name', 'stadium_id', 'year']
+      pred_joins            : []
+      gold_joins            : ['join']
+      pred_set_ops          : []
+      gold_set_ops          : ['except']
+      gold_branch_count     : 2
+      pred_branch_count     : 1
+      matching_branches     : 0
+    Example 3:
+      PRED : SELECT T1.Name , T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE YEAR = '2014' INTERSECT SELECT T1.Name , T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE YEAR = '2015'
+      GOLD : SELECT T2.name , T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.Year = 2014 INTERSECT SELECT T2.name , T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.stadium_id WHERE T1.Year = 2015
+      missing_columns       : ['year']
+      gold_branch_count     : 2
+      pred_branch_count     : 2
+      matching_branches     : 0
+────────────────────────────────────────────────────────────────────────
+  SET OPERATION ANALYSIS
+────────────────────────────────────────────────────────────────────────
+  Queries with set operations : 80  (7.7% of total)
+
+Set Op       Total    Correct    Accuracy  Wrong as (top 3)
+---------  -------  ---------  ----------  -----------------------------
+EXCEPT          29         12       41.4%  none×16, intersect×1
+INTERSECT       40         32       80.0%  none×8
+UNION           11          2       18.2%  except×4, none×4, intersect×1
+
+  Confusion matrix  (rows = gold, cols = predicted):
+
+gold \ pred      EXCEPT    INTERSECT    NONE    UNION
+-------------  --------  -----------  ------  -------
+EXCEPT               12            1      16        0
+INTERSECT             0           32       8        0
+UNION                 4            1       4        2
+
+  Branch-level accuracy : 30 / 162 branches correct  (18.5%)
+  (each SELECT branch within a set op scored independently)
+
+  Sample errors — UNION (lowest accuracy):
+    1. PRED: SELECT T1.CountryId , T2.CountryName FROM car_makers AS T1 JOIN countries AS T2 ON T1.Country = T2.CountryID WHERE COUNT(*) > 3 UNION SELECT T1.ModelId , T2.CountryName FROM car_names AS T1 JOIN countries AS T2 ON T1.MakeId = T2.CountryID WHERE T1.Model = "fiat"
+       GOLD: SELECT T1.countryId , T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId = T2.Country GROUP BY T1.countryId HAVING count(*) > 3 UNION SELECT T1.countryId , T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId = T2.Country JOIN MODEL_LIST AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'fiat'
+    2. PRED: SELECT countryid , countryname FROM countries WHERE countryid IN ( SELECT countryid FROM car_makers GROUP BY countryid HAVING count(*) > 3 UNION SELECT countryid FROM car_makers WHERE maker = "Fiat" )
+       GOLD: select t1.countryid , t1.countryname from countries as t1 join car_makers as t2 on t1.countryid = t2.country group by t1.countryid having count(*) > 3 union select t1.countryid , t1.countryname from countries as t1 join car_makers as t2 on t1.countryid = t2.country join model_list as t3 on t2.id = t3.maker where t3.model = 'fiat'
+    3. PRED: SELECT airportname FROM airports EXCEPT SELECT T1.city FROM airports AS T1 JOIN flights AS T2 ON T1.airportcode = T2.destairport INTERSECT SELECT T1.city FROM airports AS T1 JOIN flights AS T2 ON T1.airportcode = T2.sourceairport
+       GOLD: SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights)
+
+════════════════════════════════════════════════════════════════════════
